@@ -1,0 +1,170 @@
+<!doctype html><html lang="en"><head><meta charset="UTH-8"><title>Tilings</title><link rel="icon" href="assets/logo.png" type="image/x-icon"><style>html, body {
+            margin: 0;
+            padding: 0;
+            background-color: #999;
+            color: black;
+            /*overflow: hidden;*/
+        }
+
+        header {
+            height: 64px;
+        }
+
+        canvas {
+            margin: 0;
+            display: inline-block;
+        }
+
+        input, button { /* override browser settings */
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        input, button {
+            background-color: rgb(240, 240, 240);
+            color: black;
+        }
+        input:disabled, button:disabled{
+            color: rgba(16, 16, 16, 0.5);
+            background-color: rgba(240, 240, 240, 0.5);
+            border-color: rgba(118, 118, 118, 0.5);
+            cursor: default;
+        }
+
+        .toggle-input {
+            display: none;
+        }
+
+        /* Toggle Label */
+        .toggle-label {
+            display: inline-block;
+            width: 48px;
+            height: 24px;
+            background: #ccc;
+            border-radius: 24px;
+            position: relative;
+            cursor: pointer;
+            transition: background-color 0.25s;
+        }
+
+        /* The circle inside the toggle */
+        .toggle-label::after {
+            content: "";
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: green;
+            border-radius: 50%;
+            top: 2px;
+            left: 2px;
+            transition: 0.25s;
+        }
+
+        /* Toggle ON state */
+        .toggle-input:checked + .toggle-label {
+            background: #CCC;
+        }
+
+        .toggle-input:checked + .toggle-label::after {
+            left: 26px;
+        }
+
+        .top-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000; /*keep it above all other elements*/
+            background-color: rgb(60, 120, 30);
+            min-height: 64px;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            justify-content: space-evenly;
+            align-items: stretch;
+            gap: 4px;
+        }
+
+        #grid-length-input {
+            height: 36px;
+            width: 36px;
+            border-radius: 4px;
+            text-align: center; 
+            font-weight: bold;
+            font-size: 16px;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        #grid-length-input-container {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+        }
+
+        .grid-container {
+            padding: 4px;
+            border-radius: 4px;
+            border: 1px solid black;
+            background: rgb(233, 184, 93);
+        }
+
+        .my-flex-item {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            background-color: rgb(170, 230, 130);
+            min-height: 64px;
+            padding-left: 8px;
+            padding-right: 8px;
+        }
+
+        .welcome {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 48px;
+        }
+
+        .main-container {
+            display: flex;  
+            gap: 1rem; 
+            padding: 1rem; 
+            flex-wrap: wrap;
+            flex-direction: row;
+            justify-content: space-evenly;
+            padding-top: 24px;
+            padding-bottom: 72px;
+        }
+
+        .my-text-button {            
+            padding-left: 8px;
+            padding-right: 8px;
+        }
+
+        .my-button {
+            border-radius: 4px;
+            margin: 4px;
+            text-align: center; 
+            height: 36px;
+            min-width: 36px;
+            vertical-align: middle;
+        }
+
+        .emoji {
+            font-size: 18px;
+        }</style></head><body><header><div class="top-bar"><div id="grid-length-input-contaier" class="my-flex-item" style="gap:6px;"><span>Grid Length: </span><input id="grid-length-input" placeholder="N"></div><div style="gap: 6px;" class="my-flex-item">Vertical <input type="checkbox" id="orientationToggle" unchecked class="toggle-input"> <label for="orientationToggle" class="toggle-label" style="position: relative;"><span style="position: absolute; 
+                        top: 100%; /* Below the label */
+                        left: 50%;
+                        transform: translateX(-50%);
+                        color: #444;
+                        font-size: 0.8rem;
+                        width: auto; 
+                        display: inline-block;
+                        white-space: nowrap; 
+                        margin-top: 2px;">toggle with space</span></label> Horizontal</div><div class="my-flex-item" style="gap:6px;"><span id="complete-counter">0</span><span>/</span><span id="N">N</span><span>Complete and unique</span> <button id="clear-all" class="my-button emoji" title="clear all">🧹</button></div><div class="my-flex-item"><button id="auto-complete" class="my-button my-text-button">Auto Complete</button> <button id="pause" class="my-button emoji" disabled="disabled" title="play / pause">⏸️</button> <button id="fast-forward" class="my-button emoji" disabled="disabled" title="fast-forward">⏩</button></div></div></header><main style="min-height: 100%;"><div id="container" class="welcome"><h1>Enter the Grid Length (N)</h1></div></main><script defer="defer" src="tilings.bundle.js"></script></body></html>
