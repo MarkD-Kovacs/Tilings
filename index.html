@@ -1,29 +1,26 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>GeoTool</title><link rel="icon" href="assets/logo.png" type="image/x-icon"><style>* {
-            -moz-box-sizing: border-box;
-            -webkit-box-sizing: border-box;
-            box-sizing: border-box;
-        }
-
-        html, body {
+<!doctype html><html lang="en"><head><meta charset="UTH-8"><title>Tilings</title><link rel="icon" href="assets/logo.png" type="image/x-icon"><style>html, body {
             margin: 0;
             padding: 0;
-            /*overflow: hidden;*/
-            display: flex;
-            flex-direction: row;
-            scrollbar-width: none !important;
+            background-color: #999;
             color: black;
+            /*overflow: hidden;*/
         }
-        html::-webkit-scrollbar, body::-webkit-scrollbar {
-            display: none !important;
-            width: 0 !important;
-            height: 0 !important;
+
+        header {
+            height: 64px;
         }
 
         canvas {
             margin: 0;
             display: inline-block;
         }
-        input, button, textarea {
+
+        input, button { /* override browser settings */
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        input, button {
             background-color: rgb(240, 240, 240);
             color: black;
         }
@@ -32,111 +29,6 @@
             background-color: rgba(240, 240, 240, 0.5);
             border-color: rgba(118, 118, 118, 0.5);
             cursor: default;
-        }
-
-        p {
-            text-indent: 1em;
-        }
-
-        .large-text {
-            width:100%; 
-            min-height:100px; 
-            height:auto;
-            resize:none; 
-            text-align:left; 
-            background-color: rgb(240, 240, 240);
-            padding: 5px;
-            margin-right: 2px;
-            border: 1px solid black;
-            border-radius: 3px;
-            text-align: center;
-            font-size: 14px;
-            box-sizing: border-box;
-            display: block;
-            font-family: system-ui, -apple-system, Helvetica, sans-serif;
-            line-height: 1.2;
-            white-space: pre-wrap;
-        }
-        .hr {
-            background-color: black; 
-            width: 100%; 
-            height: 0px; 
-            border-top: 2px solid rgb(30, 30, 30);
-            margin-top: 4px;
-            margin-bottom: 4px;
-        }
-        .highlight {
-            color: rgb(214, 90, 45)
-        }
-        #toolbar {
-            background-color: rgb(140, 220, 160);
-            padding: 10px;
-            min-width: 400px;
-            max-width: 400px;
-            /*
-            width: 20vw;
-            min-width: 312px;
-            max-width: 400px;*/
-        }
-        .standard-button {
-            padding: 7px;
-            /*width: 90px;*/
-            border: 1px solid black;
-            border-radius: 3px;
-            text-align: center;
-            font-size: 12px;
-        }
-        .shortcut-value-btn {
-            padding: 5px;
-            margin-right: 2px;
-            margin-bottom: 5px;
-            width: 36px;
-            border: 1px solid black;
-            border-radius: 3px;
-            text-align: center;
-            font-size: 12px;
-        }
-        .my-button {
-            padding: 5px;
-            margin-right: 2px;
-            margin-bottom: 5px;
-            border: 1px solid black;
-            border-radius: 3px;
-            text-align: center;
-            font-size: 12px;
-        }
-        .field {
-            /*padding: 5px;*/
-            height: 28px;
-            /*margin-right: 3px;*/
-            /*margin-bottom: 5px;*/
-            width: 120px;
-            border: 1px solid black;
-            border-radius: 3px;
-            text-align: center;
-            font-size: 12px;
-        }
-        .clock-field{
-            /*padding: 5px;*/
-            height: 28px;
-            margin-left: 3px;
-            width: 100px;
-            border: 1px solid black;
-            border-radius: 3px;
-            text-align: center;
-            font-size: 12px;
-        }
-        .add {
-            background: lightgreen;
-        }
-        .substract {
-            background: lightcoral;
-        }
-        input {
-            width: 2rem;
-            /*margin-right: 5px;*/
-            opacity: 90%;
-            padding: 4px;
         }
 
         .toggle-input {
@@ -152,7 +44,7 @@
             border-radius: 24px;
             position: relative;
             cursor: pointer;
-            transition: background-color 0.3s;
+            transition: background-color 0.25s;
         }
 
         /* The circle inside the toggle */
@@ -161,141 +53,118 @@
             position: absolute;
             width: 20px;
             height: 20px;
-            background: white;
+            background: green;
             border-radius: 50%;
             top: 2px;
             left: 2px;
-            transition: 0.3s;
+            transition: 0.25s;
         }
 
         /* Toggle ON state */
         .toggle-input:checked + .toggle-label {
-            background: #4CAF50;
+            background: #CCC;
         }
 
         .toggle-input:checked + .toggle-label::after {
             left: 26px;
         }
 
-        /* Vertical toggle */
-        .vertical-toggle-input {
-            display: none;
-        }
-        .vertical-toggle-label {
-            display: inline-block;
-            width: 12px;
-            height: 46px;
-            background: rgb(225, 225, 225);
-            border-radius: 24px;
-            position: relative;
-            cursor: pointer;
-        }
-        /* The circle inside the vertical-toggle */
-        .vertical-toggle-label::after {
-            content: "";
-            position: absolute;
-            width: 8px;
-            height: 8px;
-            background: rgb(52, 52, 52);
-            border-radius: 50%;
-            top: 2px;
-            left: 2px;
-            transition: 0.2s;
-        }
-        /* vertical-Toggle ON state */
-        /*.vertical-toggle-input:checked + .vertical-toggle-label {
-            background: #4CAF50;
-        }*/
-        .vertical-toggle-input:checked + .vertical-toggle-label::after {
-            top: 36px;
-        }
-
-        .popup {
-            position: absolute;
+        .top-bar {
+            position: fixed;
             top: 0;
-            right: 100%;
-            display: none;
-            z-index: 100;
-            margin-right: 5px;
-            width: 200px;
-
-            padding: 10px;
-            background: #f0f0f0;
-            border: 4px solid black;
-            color: rgb(212, 113, 56);
-            font-size: 24px;
-            font-weight: bold;
-            text-align: center;
+            left: 0;
+            width: 100%;
+            z-index: 1000; /*keep it above all other elements*/
+            background-color: rgb(60, 120, 30);
+            min-height: 64px;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            justify-content: space-evenly;
+            align-items: stretch;
+            gap: 4px;
         }
 
-        /*.popup {
-            position: fixed;
-            top: 10px;
-            right: 405px; /* toolbar width + 5 */
-            /*transform: translate(0%, -50%);*/
-            /*display: none;
-            
-            padding: 10px;
-            background: #f0f0f0;
-            border: 4px solid black;
-            display: none;
-            z-index: 100;
-            margin-right: 5px;
-            color: rgb(212, 113, 56);
-            font-size: 24px;
+        #grid-length-input {
+            height: 36px;
+            width: 36px;
+            border-radius: 4px;
+            text-align: center; 
             font-weight: bold;
-        }*/
-
-        .info-popup {
-            position: fixed;
-            top: 46px;
-            right: 10px;
-            /*transform: translate(0%, -50%);*/
-            display: none;
-            
-            padding: 10px;
-            background: #f0f0f0;
-            border: 4px solid black;
-            display: none;
-            z-index: 100;
-            margin-right: 7px;
-            color: black;
-            width: 600px;
             font-size: 16px;
+            padding: 0;
+            box-sizing: border-box;
         }
 
-        .title {
-            font-size: 16px; 
-            font-weight: bold;
-            margin-right: 3px;
+        #grid-length-input-container {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
         }
 
-        .vertical-space {
-            margin-top: 4px;
-            margin-bottom: 4px;
-            margin-left: 0px;
-            margin-right: 0px;
+        .grid-container {
+            padding: 4px;
+            border-radius: 4px;
+            border: 1px solid black;
+            background: rgb(233, 184, 93);
         }
 
-        .scrollable { 
-            max-height: 100vh;
-            /*overflow-y: auto;*/ /* adds vertical scrollbar only when needed */
-
-            /* For Firefox */
-            scrollbar-width: none !important;
-
-            /* For Internet Explorer and Edge */
-            /*-ms-overflow-style: none !important;*/
+        .my-flex-item {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            background-color: rgb(170, 230, 130);
+            min-height: 64px;
+            padding-left: 8px;
+            padding-right: 8px;
         }
 
-        /* For Chrome, Safari, and Opera */
-        .scrollable::-webkit-scrollbar {
-            display: none !important;
-            width: 0 !important;
-            height: 0 !important;
+        .welcome {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 48px;
         }
 
-        h3 {
-            margin-top: 5px;
-            margin-bottom: 5px;
-        }</style></head><body><div id="container"><canvas id="canvas" oncontextmenu="event.preventDefault();"></canvas></div><div id="toolbar" class="scrollable" style="display: flex; flex-direction: column;"><h3 id="geoToolLabel">GeoTool:</h3><div style="display:flex;flex-direction: row;"><table><tr class="vertical-space"><td class="title" id="startLabel">Start (x, y):</td><td><input id="startXField" class="field" style="width: 60px;"></td><td><input id="startYField" class="field" style="width: 60px;"></td></tr><tr class="vertical-space"><td class="title" id="arrowLabel">End (x, y):</td><td><input id="arrowXField" class="field" style="width: 60px;"></td><td><input id="arrowYField" class="field" style="width: 60px;"></td></tr></table><span style="margin-left: 6px; display: inline-flex; flex-direction: row; align-items: center;"><input type="checkbox" id="startEndMagnet" checked="checked" class="vertical-toggle-input"> <label for="startEndMagnet" class="vertical-toggle-label"></label> <span class="title" style="margin-left: 6px;">Magnetic</span></span></div><div class="vertical-space"><span class="title" id="distanceLabel">Length:</span> <input id="distanceField" class="field"></div><div class="vertical-space" id="angleFromOxLabel"><span class="title">Angle from Ox:</span> <input id="directionField" class="field" style="width: 60px; margin-right:1px;"><span id="directionUnit">&deg</span> <button type="button" id="clock1" type="text" class="clock-field"></button></div><div id="angle-from-reference-container"><div class="vertical-space" style="position: relative;" id="angleFromSelectedLabel"><span class="title">Angle from Selected Point:</span> <input id="directionWithRefField" class="field" style="width: 60px;margin-right:1px;"><span id="directionWithRefUnit">&deg</span> <button type="button" id="clock2" type="text" class="clock-field">trigonometric &#x21BA;</button></div></div><div class="vertical-space" style="position: relative"><span class="title">Create Objects:</span> <button id="point" class="standard-button">Point</button> <button id="line" class="standard-button">Line</button> <button id="circle" class="standard-button">Circle</button> <button id="clockwise-arc" class="standard-button">Arc &#x21BA;</button> <button id="counterclockwise-arc" class="standard-button">Arc &#x21BB;</button><div id="popup" class="popup" style="z-index:100;">popup</div></div><div class="vertical-space" style="position: relative"><span class="title">Shortcuts:</span> <button id="intersection" class="standard-button">Intersection</button> <button id="triangle" class="standard-button">Triangle</button> <button id="square" class="standard-button">Square</button> <button id="parallelogram" class="standard-button">Parallelogram</button></div><div class="hr" style="margin-bottom: 8px;"></div><div id="selectedObjectContaier" style="display:flex;flex-direction:row;"><div><h3 id="selectedObjectLabel">Selected Object:</h3><div class="vertical-space" style="margin-top:8px"><span class="title" id="labelOfSelected">Label:</span> <input name="label-field" id="label-field" class="field" style="width: 75px;" disabled="disabled"></div><div class="vertical-space" style="margin-top:8px"><button id="deleteBtn" class="standard-button" disabled="disabled">Delete Object</button></div></div><div style="flex-grow:1; margin-left: 7px;"><div class="large-text" id="selectedObjectText" style="width:100%; height:100%; text-align:left; background-color:#ddd;" disabled="disabled"></div></div></div><div class="hr" style="margin-top:8px"></div><div class="vertical-space" style="display: flex; flex-direction: row; justify-content: space-between"><span style="display: inline-flex; flex-direction: row; align-items: center;"><span class="title">Grid:</span> <input type="checkbox" id="gridToggle" checked="checked" class="toggle-input"> <label for="gridToggle" class="toggle-label"></label> </span><span style="display: inline-flex; flex-direction: row; align-items: center;"><span class="title">Magnet:</span> <input type="checkbox" id="magnetToggle" checked="checked" class="toggle-input"> <label for="magnetToggle" class="toggle-label"></label> </span><span style="display: inline-flex; flex-direction: row; align-items: center;"><span class="title">Radians:</span> <input type="checkbox" id="radiansToggle" class="toggle-input"> <label for="radiansToggle" class="toggle-label"></label></span></div><div class="vertical-space" style="margin-top: 8px; display: flex; flex-direction: row; justify-content: space-between"><span><span class="title">Zoom:</span> <input id="zoom-field" class="field" style="width: 60px;" value="1"></span><spa><span class="title">Files:</span> <button id="load-data" class="my-button">Open</button> <button id="save-data" class="my-button">Save</button> <button id="info" class="my-button" style="position: fixed; top: 10px; right: 10px; width: 40px; font-weight: bold; padding: 8px;">Info</button><div id="info-popup" class="info-popup"><div style="display: flex; flex-direction: row; align-items: center; justify-content:center; gap:15px;"><img src="assets/logo.png" alt="logo" width="140" height="140"><h1>GeoTool</h1></div><p>This app combines the functionality of a <b>ruler, protractor and compass</b> into one tool, called <b>GeoTool</b> (the blue dashed line).</p><p>Just like real-world tools, it has dual purpose: drawing and measuring. It delivers an intuitive experience by using <b>bidirectional fields</b>, which display information in real-time and can also be used to control the GeoTool.</p><p>Each input field for the GeoTool also has a <b>built-in calculator</b>. Type in any valid math expression and press Enter to get the result and update the GeoTool instantly. The calculators support the following symbols and functions:</p><ul><li>"pi" and "e" as mathematical constants</li><li>"^" for exponentiation: x^y</li><li>"sqrt" function for square roots: sqrt(x)</li><li>"log" function: log(x, base)</li></ul><p></p><p>Other features:</p><ul><li>Use the magnetic property to snap objects to other objects or to grid intersections</li><li>Double-click anywhere to create a new point</li><li>Drag and drop objects to move them around</li><li>Drag from an empty spot to move the canvas</li><li>Zoom in or out by scrolling or pinching</li><li>Switch between measuring angles in degrees or radians</li></ul><p></p></div></spa></div><div class="hr"></div><div class="vertical-space" style="display:flex; flex-direction:row; align-items: baseline; justify-content: space-between;"><span class="title">Calculator:</span> <input id="calculator-input" class="field" style="width: 160px"> <span>=</span> <input id="calculator-output" class="field" style="width: 100px" readonly="readonly"></div><div class="title vertical-space">Notes:</div><div><textarea id="notes" class="large-text" style="text-align:left;"></textarea></div></div><script defer="defer" src="731.bundle.js"></script><script defer="defer" src="index.bundle.js"></script></body></html>
+        .main-container {
+            display: flex;  
+            gap: 1rem; 
+            padding: 1rem; 
+            flex-wrap: wrap;
+            flex-direction: row;
+            justify-content: space-evenly;
+            padding-top: 24px;
+            padding-bottom: 72px;
+        }
+
+        .my-text-button {            
+            padding-left: 8px;
+            padding-right: 8px;
+        }
+
+        .my-button {
+            border-radius: 4px;
+            margin: 4px;
+            text-align: center; 
+            height: 36px;
+            min-width: 36px;
+            vertical-align: middle;
+        }
+
+        .emoji {
+            font-size: 18px;
+        }</style></head><body><header><div class="top-bar"><div id="grid-length-input-contaier" class="my-flex-item" style="gap:6px;"><span>Grid Length: </span><input id="grid-length-input" placeholder="N"></div><div style="gap: 6px;" class="my-flex-item">Vertical <input type="checkbox" id="orientationToggle" unchecked class="toggle-input"> <label for="orientationToggle" class="toggle-label" style="position: relative;"><span style="position: absolute; 
+                        top: 100%; /* Below the label */
+                        left: 50%;
+                        transform: translateX(-50%);
+                        color: #444;
+                        font-size: 0.8rem;
+                        width: auto; 
+                        display: inline-block;
+                        white-space: nowrap; 
+                        margin-top: 2px;">toggle with space</span></label> Horizontal</div><div class="my-flex-item" style="gap:6px;"><span id="complete-counter">0</span><span>/</span><span id="N">N</span><span>Complete and unique</span> <button id="clear-all" class="my-button emoji" title="clear all">🧹</button></div><div class="my-flex-item"><button id="auto-complete" class="my-button my-text-button">Auto Complete</button> <button id="pause" class="my-button emoji" disabled="disabled" title="play / pause">⏸️</button> <button id="fast-forward" class="my-button emoji" disabled="disabled" title="fast-forward">⏩</button></div></div></header><main style="min-height: 100%;"><div id="container" class="welcome"><h1>Enter the Grid Length (N)</h1></div></main><script defer="defer" src="tilings.bundle.js"></script></body></html>
